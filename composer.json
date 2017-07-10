@@ -1,0 +1,41 @@
+{
+    "name": "werkspot/message-bus",
+    "type": "library",
+    "description": "A generic message bus that can be used to implement a CommandBus or an EventBus or any other similar construction.",
+    "version": "1.0.0",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Werkspot Team",
+            "email": "technology@werkspot.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Werkspot\\MessageBus\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Werkspot\\MessageBus\\Test\\": "tests/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": "^7.1",
+        "ramsey/uuid": "^3.5"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.0",
+        "mockery/mockery": "v1.0.0-alpha1",
+        "phpunit/phpunit": "^5.7"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../lib/php-vm"
+        }
+    ]
+}
