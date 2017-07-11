@@ -57,7 +57,7 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
     private $errors;
 
     /**
-     * TODO create a PriorityEnum and use it here instead of an int
+     * TODO [POST CLEANUP] create a PriorityEnum and use it here instead of an int
      */
     public function __construct(
         $payload,

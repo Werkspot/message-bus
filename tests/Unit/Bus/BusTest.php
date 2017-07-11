@@ -6,14 +6,14 @@ namespace Werkspot\MessageBus\Test\Unit\Bus;
 
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
-use Werkspot\Instapro\Infrastructure\CommandBus\CommandInterface;
+use stdClass;
 use Werkspot\MessageBus\Bus\Bus;
 use Werkspot\MessageBus\Bus\DeliveryChain\MiddlewareInterface;
 use Werkspot\MessageBus\Message\Message;
 use Werkspot\MessageBus\Message\MessageInterface;
 
-// TODO decouple this from Werkspot\Command
 final class BusTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
@@ -77,9 +77,9 @@ final class BusTest extends TestCase
         };
     }
 
-    private function createCommand(): CommandInterface
+    private function createCommand(): MockInterface
     {
-        $command = Mockery::mock(CommandInterface::class);
+        $command = Mockery::mock(stdClass::class);
         $command->shouldReceive('getCommandName')->andReturn('testing');
 
         return $command;

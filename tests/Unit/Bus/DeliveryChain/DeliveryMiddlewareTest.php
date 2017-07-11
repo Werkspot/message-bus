@@ -14,7 +14,7 @@ use Werkspot\MessageBus\Bus\DeliveryChain\DeliveryMiddleware;
 use Werkspot\MessageBus\Bus\Handler\MessageHandlerFactoryInterface;
 use Werkspot\MessageBus\Message\Message;
 
-// TODO decouple this from Werkspot\Command
+// TODO [POST CLEANUP] decouple this from Werkspot\Instapro
 final class DeliveryMiddlewareTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
