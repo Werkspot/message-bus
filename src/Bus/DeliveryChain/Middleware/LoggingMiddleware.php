@@ -7,8 +7,8 @@ namespace Werkspot\MessageBus\Bus\DeliveryChain\Middleware;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use Werkspot\Command\Exception\CommandViolationException;
-use Werkspot\Command\Exception\CommandViolationListException;
+use Werkspot\MessageBus\Bus\DeliveryChain\Middleware\Validation\MessageViolationException;
+use Werkspot\MessageBus\Bus\DeliveryChain\Middleware\Validation\MessageViolationListException;
 use Werkspot\MessageBus\Bus\DeliveryChain\MiddlewareInterface;
 use Werkspot\MessageBus\Message\AsynchronousMessage;
 use Werkspot\MessageBus\Message\MessageInterface;
@@ -37,7 +37,7 @@ final class LoggingMiddleware implements MiddlewareInterface
 
         try {
             $next($message);
-        } catch (CommandViolationListException $exceptionList) {
+        } catch (MessageViolationListException $exceptionList) {
             $this->logValidationException($message, $exceptionList);
             throw $exceptionList;
         } catch (Exception $exception) {
@@ -48,11 +48,11 @@ final class LoggingMiddleware implements MiddlewareInterface
 
     private function logValidationException(
         MessageInterface $message,
-        CommandViolationListException $exceptionList
+        MessageViolationListException $exceptionList
     ): void {
         $this->logger->error('Error validating message ' . json_encode($message->getPayload()));
 
-        /** @var CommandViolationException $exception */
+        /** @var MessageViolationException $exception */
         foreach ($exceptionList as $key => $exception) {
             $this->logger->debug(sprintf('Violation error %s: %s', $key, $exception->getMessage()));
         }

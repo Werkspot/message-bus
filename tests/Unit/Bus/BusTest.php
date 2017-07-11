@@ -7,12 +7,13 @@ namespace Werkspot\MessageBus\Test\Unit\Bus;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
-use Werkspot\Command\Commands\CommandInterface;
+use Werkspot\Instapro\Infrastructure\CommandBus\CommandInterface;
 use Werkspot\MessageBus\Bus\Bus;
 use Werkspot\MessageBus\Bus\DeliveryChain\MiddlewareInterface;
 use Werkspot\MessageBus\Message\Message;
 use Werkspot\MessageBus\Message\MessageInterface;
 
+// TODO decouple this from Werkspot\Command
 final class BusTest extends TestCase
 {
     use MockeryPHPUnitIntegration;

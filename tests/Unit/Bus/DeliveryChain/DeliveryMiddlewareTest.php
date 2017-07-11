@@ -8,12 +8,13 @@ use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
-use Werkspot\Command\Commands\CommandInterface;
-use Werkspot\Command\Handler\CommandHandlerInterface;
+use Werkspot\Instapro\Infrastructure\CommandBus\Command\CommandHandlerInterface;
+use Werkspot\Instapro\Infrastructure\CommandBus\Command\CommandInterface;
 use Werkspot\MessageBus\Bus\DeliveryChain\DeliveryMiddleware;
 use Werkspot\MessageBus\Bus\Handler\MessageHandlerFactoryInterface;
 use Werkspot\MessageBus\Message\Message;
 
+// TODO decouple this from Werkspot\Command
 final class DeliveryMiddlewareTest extends TestCase
 {
     use MockeryPHPUnitIntegration;

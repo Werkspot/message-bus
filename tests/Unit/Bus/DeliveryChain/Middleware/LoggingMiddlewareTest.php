@@ -11,9 +11,9 @@ use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use stdClass;
-use Werkspot\Command\Exception\CommandViolationException;
-use Werkspot\Command\Exception\CommandViolationListException;
 use Werkspot\MessageBus\Bus\DeliveryChain\Middleware\LoggingMiddleware;
+use Werkspot\MessageBus\Bus\DeliveryChain\Middleware\Validation\MessageViolationException;
+use Werkspot\MessageBus\Bus\DeliveryChain\Middleware\Validation\MessageViolationListException;
 use Werkspot\MessageBus\Message\AsynchronousMessage;
 use Werkspot\MessageBus\Message\Message;
 
@@ -75,14 +75,14 @@ final class LoggingMiddlewareTest extends TestCase
     /**
      * @test
      *
-     * @expectedException \Werkspot\Command\Exception\CommandViolationListException
+     * @expectedException \Werkspot\MessageBus\Bus\DeliveryChain\Middleware\Validation\MessageViolationListException
      */
     public function executeLogsValidationException(): void
     {
         $messageMock = new Message(self::PAYLOAD, 'dummy destination');
 
-        $exceptionList = new CommandViolationListException();
-        $exceptionList->add($exception = new CommandViolationException('dummy_field', 'dummy error message'));
+        $exceptionList = new MessageViolationListException();
+        $exceptionList->add($exception = new MessageViolationException('dummy_field', 'dummy error message'));
 
         $loggerMock = $this->getLoggerMock('Executing message "' . self::PAYLOAD . '"');
         $loggerMock->shouldReceive('error')->once()->with('Error validating message "' . self::PAYLOAD . '"');
