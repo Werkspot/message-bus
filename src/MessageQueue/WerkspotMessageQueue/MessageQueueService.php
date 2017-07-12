@@ -24,7 +24,7 @@ final class MessageQueueService implements MessageQueueServiceInterface
             $message->getPayload(),
             $message->getDestination(),
             $message->getDeliverAt(),
-            $message->getPriority()
+            $message->getPriority()->toInt()
         );
     }
 }

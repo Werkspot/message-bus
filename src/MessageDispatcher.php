@@ -7,6 +7,7 @@ use Werkspot\MessageBus\Bus\Bus;
 use Werkspot\MessageBus\Bus\BusInterface;
 use Werkspot\MessageBus\Message\AsynchronousMessage;
 use Werkspot\MessageBus\Message\Message;
+use Werkspot\MessageBus\MessageQueue\PriorityEnum;
 
 final class MessageDispatcher implements MessageDispatcherInterface
 {
@@ -29,7 +30,7 @@ final class MessageDispatcher implements MessageDispatcherInterface
         $payload,
         string $destination,
         DateTimeImmutable $deliverAt = null,
-        int $priority = AsynchronousMessage::PRIORITY_LOWEST
+        PriorityEnum $priority = null
     ): void {
         $this->bus->deliver(new AsynchronousMessage($payload, $destination, $deliverAt, $priority));
     }

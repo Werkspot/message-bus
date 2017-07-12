@@ -7,9 +7,6 @@ use Throwable;
 
 interface AsynchronousMessageInterface
 {
-    const PRIORITY_LOWEST = 1;
-    const PRIORITY_HIGHEST = 10;
-
     public function getDestination(): string;
 
     /**
@@ -17,7 +14,7 @@ interface AsynchronousMessageInterface
      */
     public function getPayload();
 
-    public function getPriority(): int;
+    public function getPriority(): PriorityEnum;
 
     public function getDeliverAt(): DateTimeImmutable;
 

@@ -3,6 +3,7 @@
 namespace Werkspot\MessageBus;
 
 use DateTimeImmutable;
+use Werkspot\MessageBus\MessageQueue\PriorityEnum;
 
 interface MessageDispatcherInterface
 {
@@ -12,6 +13,6 @@ interface MessageDispatcherInterface
         $payload,
         string $destination,
         DateTimeImmutable $deliverAt = null,
-        int $priority = 0
+        PriorityEnum $priority = null
     ): void;
 }

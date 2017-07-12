@@ -27,7 +27,7 @@ final class WithMessage
                     /** @var AsynchronousMessage $expectedMessage */
                     return $expectedMessage->getTries() === $actualMessage->getTries()
                     && $expectedMessage->getErrors() === $actualMessage->getErrors()
-                    && $expectedMessage->getPriority() === $actualMessage->getPriority()
+                    && $expectedMessage->getPriority()->toInt() === $actualMessage->getPriority()->toInt()
                     && $expectedMessage->getDeliverAt() === $actualMessage->getDeliverAt()
                     && $expectedMessage->getUpdatedAt() === $actualMessage->getUpdatedAt();
                 }
@@ -45,7 +45,7 @@ final class WithMessage
                     && $expectedMessage->getPayload() === $actualMessage->getPayload()
                     && $expectedMessage->getTries() === $actualMessage->getTries()
                     && $expectedMessage->getDestination() === $actualMessage->getDestination()
-                    && $expectedMessage->getPriority() === $actualMessage->getPriority();
+                    && $expectedMessage->getPriority()->toInt() === $actualMessage->getPriority()->toInt();
             }
         );
     }

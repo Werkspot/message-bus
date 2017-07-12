@@ -11,6 +11,7 @@ use Werkspot\MessageBus\Bus\BusInterface;
 use Werkspot\MessageBus\Message\AsynchronousMessage;
 use Werkspot\MessageBus\Message\Message;
 use Werkspot\MessageBus\MessageDispatcher;
+use Werkspot\MessageBus\MessageQueue\PriorityEnum;
 use Werkspot\MessageBus\Test\WithMessage;
 
 final class MessageDispatcherTest extends TestCase
@@ -41,11 +42,15 @@ final class MessageDispatcherTest extends TestCase
         $payload = 'payload';
         $destination = 'destination';
         $deliverAt = new DateTimeImmutable('2017-10-08');
-        $priority = 5;
-        $message = new AsynchronousMessage($payload, $destination, $deliverAt, $priority);
+        $priority = new PriorityEnum(PriorityEnum::PRIORITY_MEDIUM);
+
         $this->bus->shouldReceive('deliver')
             ->once()
-            ->with(WithMessage::equalToMessageWithoutComparingDatesNorErrors($message));
+            ->with(
+                WithMessage::equalToMessageWithoutComparingDatesNorErrors(
+                    new AsynchronousMessage($payload, $destination, $deliverAt, $priority)
+                )
+            );
 
         $this->messageDispatcher->dispatchQueuedMessage($payload, $destination, $deliverAt, $priority);
     }
