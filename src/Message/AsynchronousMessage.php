@@ -4,7 +4,7 @@ namespace Werkspot\MessageBus\Message;
 
 use DateInterval;
 use DateTime;
-use DateTimeInterface;
+use DateTimeImmutable;
 use Ramsey\Uuid\Uuid;
 use Throwable;
 use Werkspot\MessageBus\MessageQueue\AsynchronousMessageInterface;
@@ -32,17 +32,17 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
     private $priority;
 
     /**
-     * @var DateTimeInterface
+     * @var DateTimeImmutable
      */
     private $deliverAt;
 
     /**
-     * @var DateTime
+     * @var DateTimeImmutable
      */
     private $createdAt;
 
     /**
-     * @var DateTime|null
+     * @var DateTimeImmutable|null
      */
     private $updatedAt;
 
@@ -62,7 +62,7 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
     public function __construct(
         $payload,
         string $destination,
-        DateTimeInterface $deliverAt = null,
+        DateTimeImmutable $deliverAt = null,
         int $priority = self::PRIORITY_LOWEST
     ) {
         if ($priority < self::PRIORITY_LOWEST ||  self::PRIORITY_HIGHEST < $priority) {
@@ -74,7 +74,7 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
         $this->payload = $payload;
         $this->priority = $priority;
         $this->deliverAt = $deliverAt ?? $this->defineDeliveryDate();
-        $this->createdAt = new DateTime();
+        $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = $this->createdAt;
     }
 
@@ -101,17 +101,17 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
         return $this->priority;
     }
 
-    public function getDeliverAt(): DateTimeInterface
+    public function getDeliverAt(): DateTimeImmutable
     {
         return $this->deliverAt;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): DateTime
+    public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
     }
@@ -128,7 +128,7 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
 
     public function fail(Throwable $error): void
     {
-        $now = new DateTime();
+        $now = new DateTimeImmutable();
 
         $errorMessage = sprintf(
             "[%s] '%s': '%s'\n%s",
@@ -149,11 +149,11 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
         $this->deliverAt = $this->defineDeliveryDate();
     }
 
-    private function defineDeliveryDate(): DateTimeInterface
+    private function defineDeliveryDate(): DateTimeImmutable
     {
         $interval = $this->getDateTimeIntervalForTry($this->tries + 1);
 
-        return (new DateTime())->add($interval);
+        return (new DateTimeImmutable())->add($interval);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Werkspot\MessageBus\Test\Unit;
 
-use DateTime;
+use DateTimeImmutable;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
@@ -36,24 +36,24 @@ final class MessageDispatcherTest extends TestCase
     /**
      * @test
      */
-    public function dispatchQueuedMessage_ShouldDeliverAQueuedMessage(): void
+    public function dispatchQueuedMessage_ShouldDeliverQueuedMessage(): void
     {
         $payload = 'payload';
         $destination = 'destination';
-        $dequeueAt = new DateTime('2017-10-08');
+        $deliverAt = new DateTimeImmutable('2017-10-08');
         $priority = 5;
-        $message = new AsynchronousMessage($payload, $destination, $dequeueAt, $priority);
+        $message = new AsynchronousMessage($payload, $destination, $deliverAt, $priority);
         $this->bus->shouldReceive('deliver')
             ->once()
             ->with(WithMessage::equalToMessageWithoutComparingDatesNorErrors($message));
 
-        $this->messageDispatcher->dispatchQueuedMessage($payload, $destination, $dequeueAt, $priority);
+        $this->messageDispatcher->dispatchQueuedMessage($payload, $destination, $deliverAt, $priority);
     }
 
     /**
      * @test
      */
-    public function dispatchSynchronousMessage_ShouldDeliverASynchronousMessage(): void
+    public function dispatchSynchronousMessage_ShouldDeliverSynchronousMessage(): void
     {
         $payload = 'payload';
         $destination = 'destination';

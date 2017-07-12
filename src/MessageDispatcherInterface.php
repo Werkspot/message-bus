@@ -2,7 +2,7 @@
 
 namespace Werkspot\MessageBus;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 
 interface MessageDispatcherInterface
 {
@@ -11,7 +11,7 @@ interface MessageDispatcherInterface
     public function dispatchQueuedMessage(
         $payload,
         string $destination,
-        DateTimeInterface $deliverAt = null,
+        DateTimeImmutable $deliverAt = null,
         int $priority = 0
     ): void;
 }

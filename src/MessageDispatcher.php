@@ -2,7 +2,7 @@
 
 namespace Werkspot\MessageBus;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 use Werkspot\MessageBus\Bus\Bus;
 use Werkspot\MessageBus\Bus\BusInterface;
 use Werkspot\MessageBus\Message\AsynchronousMessage;
@@ -28,7 +28,7 @@ final class MessageDispatcher implements MessageDispatcherInterface
     public function dispatchQueuedMessage(
         $payload,
         string $destination,
-        DateTimeInterface $deliverAt = null,
+        DateTimeImmutable $deliverAt = null,
         int $priority = AsynchronousMessage::PRIORITY_LOWEST
     ): void {
         $this->bus->deliver(new AsynchronousMessage($payload, $destination, $deliverAt, $priority));

@@ -2,7 +2,7 @@
 
 namespace Werkspot\MessageBus\MessageQueue;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 use Throwable;
 
 interface AsynchronousMessageInterface
@@ -19,7 +19,7 @@ interface AsynchronousMessageInterface
 
     public function getPriority(): int;
 
-    public function getDeliverAt(): DateTimeInterface;
+    public function getDeliverAt(): DateTimeImmutable;
 
     public function getTries(): int;
 
