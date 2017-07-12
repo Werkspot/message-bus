@@ -8,13 +8,11 @@ use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
-use Werkspot\Instapro\Infrastructure\CommandBus\Command\CommandHandlerInterface;
-use Werkspot\Instapro\Infrastructure\CommandBus\Command\CommandInterface;
+use stdClass;
 use Werkspot\MessageBus\Bus\DeliveryChain\DeliveryMiddleware;
 use Werkspot\MessageBus\Bus\Handler\MessageHandlerFactoryInterface;
 use Werkspot\MessageBus\Message\Message;
 
-// TODO [POST CLEANUP] decouple this from Werkspot\Instapro
 final class DeliveryMiddlewareTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
@@ -44,7 +42,7 @@ final class DeliveryMiddlewareTest extends TestCase
             self::fail('Next middleware should never be called');
         };
 
-        $handler = Mockery::mock(CommandHandlerInterface::class);
+        $handler = Mockery::mock(stdClass::class);
         $handler->shouldReceive('handle')
             ->once()
             ->with($command);
@@ -58,9 +56,9 @@ final class DeliveryMiddlewareTest extends TestCase
         $middleware->deliver($message, $next);
     }
 
-    private function createCommand(): CommandInterface
+    private function createCommand(): MockInterface
     {
-        $command = Mockery::mock(CommandInterface::class);
+        $command = Mockery::mock(stdClass::class);
         $command->shouldReceive('getCommandName')->andReturn('testing');
 
         return $command;
