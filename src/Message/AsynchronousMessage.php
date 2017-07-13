@@ -69,7 +69,6 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
         $this->priority = $priority ?? new PriorityEnum(PriorityEnum::PRIORITY_LOWEST);
         $this->deliverAt = $deliverAt ?? $this->defineDeliveryDate();
         $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = $this->createdAt;
     }
 
     public function getId(): string
@@ -105,7 +104,7 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): DateTimeImmutable
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
