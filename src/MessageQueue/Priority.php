@@ -4,7 +4,7 @@ namespace Werkspot\MessageBus\MessageQueue;
 
 use Werkspot\MessageBus\Message\InvalidPriorityException;
 
-final class PriorityEnum
+final class Priority
 {
     const PRIORITY_LOWEST = 0;
     const PRIORITY_LOW = 2;

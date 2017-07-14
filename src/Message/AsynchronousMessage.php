@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use Ramsey\Uuid\Uuid;
 use Throwable;
 use Werkspot\MessageBus\MessageQueue\AsynchronousMessageInterface;
-use Werkspot\MessageBus\MessageQueue\PriorityEnum;
+use Werkspot\MessageBus\MessageQueue\Priority;
 
 final class AsynchronousMessage implements AsynchronousMessageInterface, MessageInterface
 {
@@ -61,12 +61,12 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
         $payload,
         string $destination,
         DateTimeImmutable $deliverAt = null,
-        PriorityEnum $priority = null
+        Priority $priority = null
     ) {
         $this->id = Uuid::uuid4()->toString();
         $this->destination = $destination;
         $this->payload = $payload;
-        $this->priority = $priority ?? new PriorityEnum(PriorityEnum::PRIORITY_LOWEST);
+        $this->priority = $priority ?? new Priority(Priority::PRIORITY_LOWEST);
         $this->deliverAt = $deliverAt ?? $this->defineDeliveryDate();
         $this->createdAt = new DateTimeImmutable();
     }
@@ -89,7 +89,7 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
         return $this->payload;
     }
 
-    public function getPriority(): PriorityEnum
+    public function getPriority(): Priority
     {
         return $this->priority;
     }

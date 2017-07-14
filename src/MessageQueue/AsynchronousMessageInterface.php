@@ -14,7 +14,7 @@ interface AsynchronousMessageInterface
      */
     public function getPayload();
 
-    public function getPriority(): PriorityEnum;
+    public function getPriority(): Priority;
 
     public function getDeliverAt(): DateTimeImmutable;
 
