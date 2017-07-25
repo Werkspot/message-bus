@@ -56,7 +56,6 @@ final class OrmTransactionMiddlewareTest extends TestCase
         $this->entityManager->shouldReceive('flush')->once();
         $this->entityManager->shouldReceive('commit')->once();
         $this->entityManager->shouldReceive('rollback')->never();
-        $this->entityManager->shouldReceive('clear')->once();
 
         $middleware = new OrmTransactionMiddleware($this->entityManager);
         $middleware->deliver(Mockery::mock(MessageInterface::class), $next);
@@ -88,7 +87,6 @@ final class OrmTransactionMiddlewareTest extends TestCase
         $this->entityManager->shouldReceive('flush')->once();
         $this->entityManager->shouldReceive('commit')->once();
         $this->entityManager->shouldReceive('rollback')->never();
-        $this->entityManager->shouldReceive('clear')->once();
 
         $middleware->deliver(Mockery::mock(MessageInterface::class), $first);
 
@@ -120,7 +118,6 @@ final class OrmTransactionMiddlewareTest extends TestCase
         $this->entityManager->shouldReceive('flush')->never();
         $this->entityManager->shouldReceive('commit')->never();
         $this->entityManager->shouldReceive('rollback')->once();
-        $this->entityManager->shouldReceive('clear')->once();
 
         $middleware->deliver(Mockery::mock(MessageInterface::class), $first);
     }

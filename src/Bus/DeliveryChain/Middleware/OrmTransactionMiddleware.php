@@ -37,8 +37,6 @@ final class OrmTransactionMiddleware implements MiddlewareInterface
         } catch (Exception $exception) {
             $this->entityManager->rollback();
             throw $exception;
-        } finally {
-            $this->entityManager->clear();
         }
     }
 }
