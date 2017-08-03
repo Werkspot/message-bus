@@ -14,11 +14,12 @@ final class WithMessage
     public static function equalTo(MessageInterface $expectedMessage): Closure
     {
         return Mockery::on(
-            function (AsynchronousMessageInterface $actualMessage) use ($expectedMessage) {
+            function (MessageInterface $actualMessage) use ($expectedMessage) {
                 if (
                     get_class($expectedMessage) !== get_class($actualMessage)
                     || $expectedMessage->getPayload() !== $actualMessage->getPayload()
                     || $expectedMessage->getDestination() !== $actualMessage->getDestination()
+                    || $expectedMessage->getMetadata() !== $actualMessage->getMetadata()
                 ) {
                     return false;
                 }
@@ -56,7 +57,8 @@ final class WithMessage
             function (Message $actualMessage) use ($expectedMessage) {
                 return get_class($expectedMessage) === get_class($actualMessage)
                     && $expectedMessage->getPayload() === $actualMessage->getPayload()
-                    && $expectedMessage->getDestination() === $actualMessage->getDestination();
+                    && $expectedMessage->getDestination() === $actualMessage->getDestination()
+                    && $expectedMessage->getMetadata() === $actualMessage->getMetadata();
             }
         );
     }

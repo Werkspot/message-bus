@@ -23,6 +23,6 @@ final class DeliveryMiddleware implements MiddlewareInterface
     {
         $handler = $this->handlerFactory->getHandler($message);
 
-        $handler($message->getPayload());
+        $handler($message->getPayload(), $message->getMetadata());
     }
 }

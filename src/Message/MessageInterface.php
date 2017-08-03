@@ -7,4 +7,6 @@ interface MessageInterface
     public function getPayload();
 
     public function getDestination(): string;
+
+    public function getMetadata(): ?MetadataCollectionInterface;
 }

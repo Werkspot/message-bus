@@ -56,18 +56,24 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
      * @var string|null
      */
     private $errors;
+    /**
+     * @var MetadataCollectionInterface
+     */
+    private $metadata;
 
     public function __construct(
         $payload,
         string $destination,
+        MetadataCollectionInterface $metadata = null,
         DateTimeImmutable $deliverAt = null,
         Priority $priority = null
     ) {
         $this->id = Uuid::uuid4()->toString();
-        $this->destination = $destination;
         $this->payload = $payload;
-        $this->priority = $priority ?? new Priority(Priority::PRIORITY_LOWEST);
+        $this->destination = $destination;
+        $this->metadata = $metadata;
         $this->deliverAt = $deliverAt ?? $this->defineDeliveryDate();
+        $this->priority = $priority ?? new Priority(Priority::PRIORITY_LOWEST);
         $this->createdAt = new DateTimeImmutable();
     }
 
@@ -163,5 +169,10 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
         $waitingTimeInMinutes = ($try - 1) * ($try - 1);
 
         return new DateInterval(sprintf('PT%dM', $waitingTimeInMinutes));
+    }
+
+    public function getMetadata(): ?MetadataCollectionInterface
+    {
+        return $this->metadata;
     }
 }
