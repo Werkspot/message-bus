@@ -28,7 +28,7 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
     private $payload;
 
     /**
-     * @var int
+     * @var Priority
      */
     private $priority;
 
@@ -56,6 +56,7 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
      * @var string|null
      */
     private $errors;
+
     /**
      * @var array
      */
@@ -73,7 +74,7 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
         $this->destination = $destination;
         $this->metadata = $metadata;
         $this->deliverAt = $deliverAt ?? $this->defineDeliveryDate();
-        $this->priority = $priority ?? new Priority(Priority::PRIORITY_LOWEST);
+        $this->priority = $priority ?? new Priority(Priority::NORMAL);
         $this->createdAt = new DateTimeImmutable();
     }
 

@@ -31,13 +31,11 @@ class PriorityTest extends TestCase
     public function validPriorities(): array
     {
         return [
-            [Priority::PRIORITY_LOWEST],
-            [Priority::PRIORITY_LOW],
-            [Priority::PRIORITY_MEDIUM],
-            [Priority::PRIORITY_HIGH],
-            [Priority::PRIORITY_HIGHEST],
-            [0],
-            [10],
+            [Priority::LOWEST],
+            [Priority::LOW],
+            [Priority::NORMAL],
+            [Priority::HIGH],
+            [Priority::URGENT],
             [6],
         ];
     }
@@ -45,8 +43,8 @@ class PriorityTest extends TestCase
     public function invalidPriorities(): array
     {
         return [
-            [Priority::PRIORITY_LOWEST - 1],
-            [Priority::PRIORITY_HIGHEST + 1],
+            [Priority::LOWEST - 1],
+            [Priority::URGENT + 1],
             [-1],
             [11],
         ];

@@ -44,7 +44,7 @@ final class MessageDispatcherTest extends TestCase
         $payload = 'payload';
         $destination = 'destination';
         $deliverAt = new DateTimeImmutable('2017-10-08');
-        $priority = new Priority(Priority::PRIORITY_MEDIUM);
+        $priority = new Priority(Priority::NORMAL);
 
         $this->bus->shouldReceive('deliver')
             ->once()

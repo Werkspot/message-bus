@@ -6,11 +6,11 @@ use Werkspot\MessageBus\Message\InvalidPriorityException;
 
 final class Priority
 {
-    const PRIORITY_LOWEST = 0;
-    const PRIORITY_LOW = 2;
-    const PRIORITY_MEDIUM = 5;
-    const PRIORITY_HIGH = 8;
-    const PRIORITY_HIGHEST = 10;
+    const LOWEST = 1;
+    const LOW = 3;
+    const NORMAL = 5;
+    const HIGH = 7;
+    const URGENT = 9;
 
     /**
      * @var int
@@ -33,6 +33,6 @@ final class Priority
 
     private function isValid(int $priority): bool
     {
-        return self::PRIORITY_LOWEST <= $priority && $priority <= self::PRIORITY_HIGHEST;
+        return self::LOWEST <= $priority && $priority <= self::URGENT;
     }
 }
