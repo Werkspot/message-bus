@@ -7,10 +7,10 @@ use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Werkspot\MessageBus\Bus\BusInterface;
 use Werkspot\MessageBus\Message\AsynchronousMessage;
 use Werkspot\MessageBus\Message\Message;
-use Werkspot\MessageBus\Message\MetadataCollectionInterface;
 use Werkspot\MessageBus\MessageDispatcher;
 use Werkspot\MessageBus\MessageQueue\Priority;
 use Werkspot\MessageBus\Test\WithMessage;
@@ -39,7 +39,7 @@ final class MessageDispatcherTest extends TestCase
      * @test
      * @dataProvider getMetadata
      */
-    public function dispatchQueuedMessage_ShouldDeliverQueuedMessage(?MetadataCollectionInterface $collection): void
+    public function dispatchQueuedMessage_ShouldDeliverQueuedMessage(array $metadata): void
     {
         $payload = 'payload';
         $destination = 'destination';
@@ -50,34 +50,34 @@ final class MessageDispatcherTest extends TestCase
             ->once()
             ->with(
                 WithMessage::equalToMessageWithoutComparingDatesNorErrors(
-                    new AsynchronousMessage($payload, $destination, $collection, $deliverAt, $priority)
+                    new AsynchronousMessage($payload, $destination, $metadata, $deliverAt, $priority)
                 )
             );
 
-        $this->messageDispatcher->dispatchQueuedMessage($payload, $destination, $collection, $deliverAt, $priority);
+        $this->messageDispatcher->dispatchQueuedMessage($payload, $destination, $metadata, $deliverAt, $priority);
     }
 
     /**
      * @test
      * @dataProvider getMetadata
      */
-    public function dispatchSynchronousMessage_ShouldDeliverSynchronousMessage(?MetadataCollectionInterface $collection): void
+    public function dispatchSynchronousMessage_ShouldDeliverSynchronousMessage(array $metadata): void
     {
         $payload = 'payload';
         $destination = 'destination';
-        $message = new Message($payload, $destination, $collection);
+        $message = new Message($payload, $destination, $metadata);
         $this->bus->shouldReceive('deliver')
             ->once()
             ->with(WithMessage::equalToSynchronousMessage($message));
 
-        $this->messageDispatcher->dispatchSynchronousMessage($payload, $destination, $collection);
+        $this->messageDispatcher->dispatchSynchronousMessage($payload, $destination, $metadata);
     }
 
     public function getMetadata(): array
     {
         return [
-            [null],
-            [Mockery::mock(MetadataCollectionInterface::class)],
+            [[]],
+            [[new stdClass()]],
         ];
     }
 }

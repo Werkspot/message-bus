@@ -15,11 +15,11 @@ final class Message implements MessageInterface
     private $payload;
 
     /**
-     * @var MetadataCollectionInterface
+     * @var array
      */
     private $metadata;
 
-    public function __construct($payload, string $destination, MetadataCollectionInterface $metadata = null)
+    public function __construct($payload, string $destination, array $metadata = [])
     {
         $this->payload = $payload;
         $this->destination = $destination;
@@ -36,7 +36,7 @@ final class Message implements MessageInterface
         return $this->payload;
     }
 
-    public function getMetadata(): ?MetadataCollectionInterface
+    public function getMetadata(): array
     {
         return $this->metadata;
     }

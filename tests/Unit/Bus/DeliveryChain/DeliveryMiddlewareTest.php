@@ -12,7 +12,6 @@ use stdClass;
 use Werkspot\MessageBus\Bus\DeliveryChain\DeliveryMiddleware;
 use Werkspot\MessageBus\Bus\Handler\MessageHandlerFactoryInterface;
 use Werkspot\MessageBus\Message\Message;
-use Werkspot\MessageBus\Message\MetadataCollectionInterface;
 
 final class DeliveryMiddlewareTest extends TestCase
 {
@@ -35,11 +34,10 @@ final class DeliveryMiddlewareTest extends TestCase
      * @test
      * @dataProvider getMetadata
      */
-    public function executeShouldFindTheCorrectHandlerProcessTheCommandAndExitTheBus(
-        ?MetadataCollectionInterface $collection
-    ): void {
+    public function executeShouldFindTheCorrectHandlerProcessTheCommandAndExitTheBus(array $metadata): void
+    {
         $command = $this->createCommand();
-        $message = new Message($command, 'dummy destination', $collection);
+        $message = new Message($command, 'dummy destination', $metadata);
 
         $next = function (): void {
             self::fail('Next middleware should never be called');
@@ -70,8 +68,8 @@ final class DeliveryMiddlewareTest extends TestCase
     public function getMetadata(): array
     {
         return [
-            [null],
-            [Mockery::mock(MetadataCollectionInterface::class)],
+            [[]],
+            [[new stdClass()]],
         ];
     }
 }

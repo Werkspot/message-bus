@@ -57,14 +57,14 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
      */
     private $errors;
     /**
-     * @var MetadataCollectionInterface
+     * @var array
      */
     private $metadata;
 
     public function __construct(
         $payload,
         string $destination,
-        MetadataCollectionInterface $metadata = null,
+        array $metadata = [],
         DateTimeImmutable $deliverAt = null,
         Priority $priority = null
     ) {
@@ -171,7 +171,7 @@ final class AsynchronousMessage implements AsynchronousMessageInterface, Message
         return new DateInterval(sprintf('PT%dM', $waitingTimeInMinutes));
     }
 
-    public function getMetadata(): ?MetadataCollectionInterface
+    public function getMetadata(): array
     {
         return $this->metadata;
     }

@@ -8,5 +8,5 @@ interface MessageInterface
 
     public function getDestination(): string;
 
-    public function getMetadata(): ?MetadataCollectionInterface;
+    public function getMetadata(): array;
 }

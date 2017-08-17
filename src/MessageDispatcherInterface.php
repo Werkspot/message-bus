@@ -3,7 +3,6 @@
 namespace Werkspot\MessageBus;
 
 use DateTimeImmutable;
-use Werkspot\MessageBus\Message\MetadataCollectionInterface;
 use Werkspot\MessageBus\MessageQueue\Priority;
 
 interface MessageDispatcherInterface
@@ -11,13 +10,13 @@ interface MessageDispatcherInterface
     public function dispatchSynchronousMessage(
         $payload,
         string $destination,
-        MetadataCollectionInterface $metadataCollection = null
+        array $metadataCollection = []
     ): void;
 
     public function dispatchQueuedMessage(
         $payload,
         string $destination,
-        MetadataCollectionInterface $metadataCollection = null,
+        array $metadataCollection = [],
         DateTimeImmutable $deliverAt = null,
         Priority $priority = null
     ): void;

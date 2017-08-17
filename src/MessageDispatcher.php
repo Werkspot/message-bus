@@ -7,7 +7,6 @@ use Werkspot\MessageBus\Bus\Bus;
 use Werkspot\MessageBus\Bus\BusInterface;
 use Werkspot\MessageBus\Message\AsynchronousMessage;
 use Werkspot\MessageBus\Message\Message;
-use Werkspot\MessageBus\Message\MetadataCollectionInterface;
 use Werkspot\MessageBus\MessageQueue\Priority;
 
 final class MessageDispatcher implements MessageDispatcherInterface
@@ -25,7 +24,7 @@ final class MessageDispatcher implements MessageDispatcherInterface
     public function dispatchSynchronousMessage(
         $payload,
         string $destination,
-        MetadataCollectionInterface $metadataCollection = null
+        array $metadataCollection = []
     ): void {
         $this->bus->deliver(new Message($payload, $destination, $metadataCollection));
     }
@@ -33,7 +32,7 @@ final class MessageDispatcher implements MessageDispatcherInterface
     public function dispatchQueuedMessage(
         $payload,
         string $destination,
-        MetadataCollectionInterface $metadataCollection = null,
+        array $metadataCollection = [],
         DateTimeImmutable $deliverAt = null,
         Priority $priority = null
     ): void {
