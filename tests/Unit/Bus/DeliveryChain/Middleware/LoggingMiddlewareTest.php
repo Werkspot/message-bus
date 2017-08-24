@@ -32,7 +32,8 @@ final class LoggingMiddlewareTest extends TestCase
 
         $middleware = new LoggingMiddleware($loggerMock);
 
-        $middleware->deliver($messageMock, function () {});
+        $middleware->deliver($messageMock, function () {
+        });
     }
 
     /**
@@ -47,7 +48,8 @@ final class LoggingMiddlewareTest extends TestCase
 
         $middleware->deliver(
             $messageMock,
-            function () {}
+            function () {
+            }
         );
     }
 
