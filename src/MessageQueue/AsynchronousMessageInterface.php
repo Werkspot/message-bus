@@ -22,5 +22,7 @@ interface AsynchronousMessageInterface
 
     public function getErrors(): ?string;
 
+    public function getMetadata(): array;
+
     public function fail(Throwable $error): void;
 }

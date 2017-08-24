@@ -1,6 +1,6 @@
 <?php
 
-namespace Werkspot\MessageBus\Test\Unit;
+namespace Werkspot\MessageBus\Test\Unit\MessageQueue;
 
 use PHPUnit\Framework\TestCase;
 use Werkspot\MessageBus\Message\InvalidPriorityException;
