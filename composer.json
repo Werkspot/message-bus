@@ -2,8 +2,9 @@
     "name": "werkspot/message-bus",
     "type": "library",
     "description": "A generic message bus that can be used to implement a CommandBus or an EventBus or any other similar construction.",
+    "keywords": ["message", "bus", "CommandBus", "EventBus", "queue"],
     "version": "1.0.0",
-    "license": "proprietary",
+    "license": "MIT",
     "authors": [
         {
             "name": "Werkspot Team",
@@ -25,17 +26,21 @@
     },
     "require": {
         "php": "^7.1",
-        "ramsey/uuid": "^3.5"
+        "ramsey/uuid": "^3.5",
+        "roave/security-advisories": "dev-master"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.0",
         "mockery/mockery": "v1.0.0-alpha1",
         "phpunit/phpunit": "^5.7"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../lib/php-vm"
+    "suggest": {
+        "werkspot/message-bus-werkspot-message-queue-adapter": "The adapter for the Werkspot/MessageQueue.",
+        "werkspot/message-queue": "A message queue that is proven to work with this message bus."
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
         }
-    ]
+    }
 }
