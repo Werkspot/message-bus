@@ -1,0 +1,14 @@
+# Misc
+.DS_Store
+.idea
+composer.phar
+doc/_build
+!/**/.gitkeep
+
+# ROOT
+vendor
+.php_cs
+.php_cs.cache
+phpunit.xml
+composer.lock
+coverage.clover.xml
