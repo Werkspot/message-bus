@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+
+$rootDir = __DIR__ . '/..';
+$returnVal = 0;
+
+system(
+    "docker run --mount type=bind,src=$rootDir,dst=/opt/message-bus -w /opt/message-bus --rm werkspot/message-bus:application_php_7.1 "
+    . "php -dzend_extension=xdebug.so vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover.xml",
+    $returnVal
+);
+
+exit($returnVal);
