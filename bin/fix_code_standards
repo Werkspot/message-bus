@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+$rootDir = __DIR__ . '/..';
+$argumentList = $argv;
+unset($argumentList[0]);
+$returnVal = 0;
+
+system(
+    "docker run --mount type=bind,src=$rootDir,dst=/opt/message-bus -w /opt/message-bus --rm werkspot/message-bus:application_php_7.1 "
+    . "php vendor/bin/php-cs-fixer fix --verbose "
+    . implode(' ' , $argumentList),
+    $returnVal
+);
+
+exit($returnVal);
