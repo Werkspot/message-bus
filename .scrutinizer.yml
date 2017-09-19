@@ -1,0 +1,31 @@
+build:
+
+  environment:
+    mysql: false
+    postgresql: false
+    redis: false
+    rabbitmq: false
+    php:
+      version: 7.1
+    docker:
+      cache:
+        images:
+          - "werkspot/message-bus:*"
+
+  tests:
+    override:
+      -
+        command: make test_with_coverage
+        coverage:
+          file: coverage.clover.xml
+          format: php-clover
+
+filter:
+  paths:
+    - "src/"
+  dependency_paths:
+    - "vendor/"
+
+build_failure_conditions:
+  - 'issues.new.exists'
+  - 'project.metric_change("scrutinizer.test_coverage", < -0.10)'
