@@ -7,7 +7,7 @@ unset($argumentList[0]);
 $returnVal = 0;
 
 system(
-    "docker run --mount type=bind,src=$rootDir,dst=/opt/message-bus -w /opt/message-bus --rm werkspot/message-bus:application_php_7.1 "
+    "docker run --volume $rootDir:/opt/message-bus -w /opt/message-bus --rm werkspot/message-bus:application_php_7.1 "
     . "php vendor/bin/php-cs-fixer fix --verbose "
     . implode(' ' , $argumentList),
     $returnVal
