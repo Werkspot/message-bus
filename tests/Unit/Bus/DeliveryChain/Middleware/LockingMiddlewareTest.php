@@ -7,6 +7,7 @@ namespace Werkspot\MessageBus\Test\Unit\Bus\DeliveryChain\Middleware;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Werkspot\MessageBus\Bus\DeliveryChain\Middleware\LockingMiddleware;
 use Werkspot\MessageBus\Message\MessageInterface;
 
@@ -39,5 +40,21 @@ final class LockingMiddlewareTest extends TestCase
         $middleware->deliver(Mockery::mock(MessageInterface::class), $first);
 
         self::assertTrue($secondMessageProcessed);
+    }
+
+    /**
+     * @test
+     */
+    public function executeShouldStopOnException(): void
+    {
+        $this->expectException(RuntimeException::class);
+
+        $middleware = new LockingMiddleware();
+        $middleware->deliver(
+            Mockery::mock(MessageInterface::class),
+            function () {
+                throw new RuntimeException();
+            }
+        );
     }
 }
