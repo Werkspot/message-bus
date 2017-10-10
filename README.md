@@ -17,8 +17,8 @@ A library capable of delivering a message to a destination synchronously or asyn
 The message to be delivered can be anything and the destination can be specified by any string.
 
 A chain of middlewares can be configured (DeliveryChain), and the message will go through all those middlewares
- allowing us to validate the message, start and commit a transaction, replace the destination according to some criteria,
- perform some logging, or whatever we need to to before and/or after delivering the message.
+ allowing us to do various things, like validating the message, start and commit a transaction, replace the destination 
+ according to some criteria, perform some logging, or whatever we need to to before and/or after delivering the message.
 
 ## Why this project exists
 
@@ -40,16 +40,6 @@ The `MessageDispatcher` is the entry point to the message bus. There are already
         '{"deliver_to": "SomeServiceId"}',  // destination to be decoded by the delivery service (MessageDeliveryServiceInterface)
         []                                  // some whatever metadata
     );
-    
-    // OR
-    
-    $messageDispatcher->dispatchSynchronousMessage(
-        $someObjectOrStringOrWhatever,      // some payload to deliver, persisted by the MessageRepository
-        '{"deliver_to": "SomeServiceId"}',  // destination to be decoded by the delivery service (MessageDeliveryServiceInterface)
-        [],                                 // some whatever metadata
-        new DateTimeImmutable('2037-10-08'),
-        new Priority(Priority::NORMAL)
-    );
 ```
 
 If you need to deliver messages asynchronously, then you need to add the `AsynchronousDeliveryMiddleware` to the bus.
@@ -69,7 +59,21 @@ For example:
         new AsynchronousDeliveryMiddleware($messageQueueService) 
         /*,  ... */
     );
+    
+    // Now you can send an Asynchronous (potentially Queued) message
+    $messageDispatcher->dispatchQueuedMessage(
+        $someObjectOrStringOrWhatever,       // some payload to deliver, persisted by the MessageRepository
+        '{"deliver_to": "SomeServiceId"}',   // destination to be decoded by the delivery service (MessageDeliveryServiceInterface)
+        [],                                  // some whatever metadata
+        new DateTimeImmutable('2037-10-08'), // some (optional, future) delivery date
+        new Priority(Priority::NORMAL)       // some priority, from 1 to 9
+    );
 ```
+
+One thing to be aware of in case you want to dispatch both Synchronous and Asynchronous messages is that you need to
+make sure the `AsynchronousDeliveryMiddleware` in the bus is called *before* the `SynchronousDeliveryMiddleware`. 
+Otherwise the Synchronous middleware will always handle it before it can be queued, and queueing will not work.
+
 
 ## Installation
 
