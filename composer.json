@@ -32,7 +32,9 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.0",
         "mockery/mockery": "v1.0.0-alpha1",
-        "phpunit/phpunit": "^5.7"
+        "phpunit/phpunit": "^5.7",
+        "doctrine/orm": "^2.5",
+        "doctrine/dbal": "^2.5"
     },
     "suggest": {
         "werkspot/message-bus-werkspot-message-queue-adapter": "The adapter for the Werkspot/MessageQueue.",
