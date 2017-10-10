@@ -94,7 +94,7 @@ make test
 
 To generate the test coverage run:
 ```bash
-make test_with_coverage
+make test-with-coverage
 ```
 
 ## Code standards

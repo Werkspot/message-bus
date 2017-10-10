@@ -15,7 +15,7 @@ build:
   tests:
     override:
       -
-        command: make test_with_coverage
+        command: make test-with-coverage
         coverage:
           file: coverage.clover.xml
           format: php-clover
