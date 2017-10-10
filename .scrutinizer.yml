@@ -28,4 +28,4 @@ filter:
 
 build_failure_conditions:
   - 'issues.new.exists'
-  - 'project.metric_change("scrutinizer.test_coverage", < -0.05)'
+  - 'project.metric("scrutinizer.test_coverage", < 1.0)'
