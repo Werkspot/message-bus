@@ -67,9 +67,9 @@ class MessageViolationListException extends RuntimeException implements Iterator
         foreach ($this->violations as $commandViolationException) {
             $fieldName = $commandViolationException->getField();
 
-            if (preg_match('/\[(\w+)\]/', $fieldName, $extraQuestionsMatch)) {
-                $rootFieldName = 'extraQuestions';
-                $mainFieldName = $extraQuestionsMatch[1];
+            if (preg_match('/(\w+)\[(\w+)\]/', $fieldName, $fieldNameMatch)) {
+                $rootFieldName = $fieldNameMatch[1];
+                $mainFieldName = $fieldNameMatch[2];
 
                 $errors[$rootFieldName][$mainFieldName] = $commandViolationException->getError();
                 continue;
