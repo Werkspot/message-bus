@@ -106,17 +106,17 @@ final class LoggingMiddlewareTest extends TestCase
      * @test
      *
      * @expectedException \Exception
+     * @dataProvider getExceptionLogData
      */
-    public function executeLogsException(): void
+    public function executeLogsException($payload, string $expectedLoggedError): void
     {
-        $messagePayload = 'payload';
-        $message = new Message($messagePayload, 'dummy destination');
+        $message = new Message($payload, 'dummy destination');
 
         $exceptionMessage = 'some exception message';
         $exception = new Exception($exceptionMessage);
 
-        $loggerMock = $this->getLoggerMock('Executing message "' . $messagePayload . '"');
-        $loggerMock->shouldReceive('error')->once()->with(get_class($exception) . ' while handling "' . $messagePayload . '": ' . $exceptionMessage);
+        $loggerMock = $this->getLoggerMock('Executing message "' . $expectedLoggedError . '"');
+        $loggerMock->shouldReceive('error')->once()->with(get_class($exception) . ' while handling "' . $expectedLoggedError . '": ' . $exceptionMessage);
         $loggerMock->shouldReceive('debug')->once()->with($exception->getTraceAsString());
         $loggerMock->shouldReceive('debug')->once()->with(serialize($message));
 
@@ -128,6 +128,15 @@ final class LoggingMiddlewareTest extends TestCase
                 throw $exception;
             }
         );
+    }
+
+    public function getExceptionLogData(): array
+    {
+        return [
+            'string payload' => ['some payload', 'some payload'],
+            'object payload' => [new stdClass(), 'stdClass'],
+            'array payload' => [['some' => 'payload'], 'array']
+        ];
     }
 
     /**
